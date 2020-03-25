@@ -5,19 +5,7 @@ public class P07_1 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // test
-        try {
-            String test = pedirEntrada();
-        } catch (InputFilePathException e) {
-            System.out.println(e.getError());
-            try {
-                e.log("errores.txt");
-            } catch (IOException ioe) {
-                System.out.println("error");
-            }
-        }
-
-        int opcion = 4;
+        int opcion = 0;
         while (opcion != 4) {
             System.out.println("==== MENU ====");
             System.out.println("\t1) Lectura y escritura del fichero de cartelera byte a byte (byte Streams).");
@@ -35,6 +23,11 @@ public class P07_1 {
 
             switch (opcion) {
                 case 1:
+                    try {
+                        leerConByteStreams();
+                    } catch (InputFilePathException e) {
+                        System.out.println(e.getError());
+                    }
                     break;
                 case 2:
                     break;
@@ -63,6 +56,23 @@ public class P07_1 {
         return ruta;
     }
 
-    public static void leerConByteStreams() {
+    public static void leerConByteStreams() throws InputFilePathException {
+        try {
+            System.out.print("Ruta del fichero: ");
+            String test = pedirEntrada();
+        } catch (InputFilePathException e) {
+            throw e;
+            try {
+                e.log("errores.txt");
+            } catch (IOException ioe) {
+                throw new InputFileException("Error al leer archivo. IOException: " + ioe.getMessage());
+            }
+        }
+    }
+
+    public static void leerConCharacterStreams() {
+    }
+
+    public static void leerConBufferStreams() {
     }
 }
