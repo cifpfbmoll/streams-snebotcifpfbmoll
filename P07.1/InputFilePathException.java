@@ -19,7 +19,7 @@ public class InputFilePathException extends Throwable {
         this.error = error;
     }
 
-    public void log(String ruta) throws IOException {
+    public void log(String ruta) {
         FileOutputStream fout = null;
         try {
             fout = new FileOutputStream(ruta, true);
@@ -36,9 +36,14 @@ public class InputFilePathException extends Throwable {
 
             fout.write('\n');
         } catch (IOException e) {
-            throw e;
+            // muestro el mensaje de error aqui para evitar repeticion de codigo en el main()
+            System.out.println(e.getMessage());
         } finally {
-            if (fout != null) fout.close();
+            try {
+                if (fout != null) fout.close();
+            } catch (IOException ioe) {
+                System.out.println(ioe.getMessage());
+            }
         }
     }
 }

@@ -27,6 +27,9 @@ public class P07_1 {
                         leerConByteStreams();
                     } catch (InputFilePathException e) {
                         System.out.println(e.getError());
+                        e.log("errores.txt");
+                    } catch (IOException ioe) {
+                        System.out.println(ioe.getMessage());
                     }
                     break;
                 case 2:
@@ -56,17 +59,87 @@ public class P07_1 {
         return ruta;
     }
 
-    public static void leerConByteStreams() throws InputFilePathException {
+    // preferiria utilizar string.split() pero el caracter '{' es un caracter del regex y no se puede escapar
+    public static String[] separarString(String str, char c) {
+        // no se la mida del array asi que no puedo instanciar un String[] sin saber la mida
+        // con ArrayList<String> puede hacerlo
+        ArrayList<String> lista_str = new ArrayList<String>();
+        String tmp_str = "";
+        for (int i = 0; i < str.length(); i ++) {
+            if (str.charAt(i) == c) {
+                lista_str.add(tmp_str);
+                tmp_str = "";
+            } else {
+                tmp_str += str.charAt(i);
+            }
+        }
+
+        lista_str.add(tmp_str);
+
+        return lista_str.toArray(new String[0]);
+    }
+
+    public static void analizarDatos(String datos) {
+        System.out.println("====================================");
+        System.out.println("===== CARTELERA DE CINE FBMOLL =====");
+        System.out.println("====================================");
+        // primero separamos todo el string por '{' (por pelicula)
+        // por cada substring, lo separamos por '#' (por dato)
+        for (String str : separarString(datos, '{')) {
+            Pelicula p = new Pelicula();
+            int i = 0;
+            for (String dato : separarString(str, '#')) {
+                switch (i) {
+                    case 0:
+                        p.setTitulo(dato);
+                        break;
+                    case 1:
+                        p.setAno(dato);
+                        break;
+                    case 2:
+                        p.setDirector(dato);
+                        break;
+                    case 3:
+                        p.setDuracion(dato + " minutos");
+                        break;
+                    case 4:
+                        p.setSinopsis(dato);
+                        break;
+                    case 5:
+                        p.setReparto(dato);
+                        break;
+                    case 6:
+                        p.setSesion(dato + " horas");
+                        break;
+                }
+
+                i ++;
+            } 
+            p.datos();
+        }
+    }
+
+    public static void leerConByteStreams() throws InputFilePathException, IOException {
+        FileInputStream fin = null;
         try {
             System.out.print("Ruta del fichero: ");
-            String test = pedirEntrada();
+            String ruta = pedirEntrada();
+            System.out.print("Ruta de salida: ");
+            String salida = pedirEntrada();
+            fin = new FileInputStream(ruta);
+            String buff = "";
+
+            int c = 0;
+            while ((c = fin.read()) != -1) buff += (char)c;
+
+            System.out.println(buff);
+            analizarDatos(buff);
         } catch (InputFilePathException e) {
-            throw e;
-            try {
-                e.log("errores.txt");
-            } catch (IOException ioe) {
-                throw new InputFileException("Error al leer archivo. IOException: " + ioe.getMessage());
-            }
+            e.log("errores.txt");
+        } catch (IOException ioe) {
+            throw ioe;
+        } finally {
+            if (fin != null) fin.close();
         }
     }
 
