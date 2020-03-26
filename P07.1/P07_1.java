@@ -111,6 +111,10 @@ public class P07_1 {
                     case 6:
                         p.setSesion(dato + " horas");
                         break;
+                    default:
+                        // hay mas datos de los esperados
+                        System.out.println("El archivo contiene mas datos de los esperados. Puede que este corrupto.");
+                        break;
                 }
 
                 i ++;
@@ -124,15 +128,15 @@ public class P07_1 {
         try {
             System.out.print("Ruta del fichero: ");
             String ruta = pedirEntrada();
-            System.out.print("Ruta de salida: ");
-            String salida = pedirEntrada();
+            //System.out.print("Ruta de salida: ");
+            //String salida = pedirEntrada();
+
             fin = new FileInputStream(ruta);
             String buff = "";
-
             int c = 0;
+
             while ((c = fin.read()) != -1) buff += (char)c;
 
-            System.out.println(buff);
             analizarDatos(buff);
         } catch (InputFilePathException e) {
             e.log("errores.txt");
