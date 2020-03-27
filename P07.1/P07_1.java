@@ -21,20 +21,16 @@ public class P07_1 {
                 continue;
             }
 
+            TipoStream tipo = null;
             switch (opcion) {
                 case 1:
-                    try {
-                        leerConByteStreams();
-                    } catch (InputFilePathException e) {
-                        System.out.println(e.getError());
-                        e.log("errores.txt");
-                    } catch (IOException ioe) {
-                        System.out.println(ioe.getMessage());
-                    }
+                    tipo = TipoStream.BYTE;
                     break;
                 case 2:
+                    tipo = TipoStream.CHAR;
                     break;
                 case 3:
+                    tipo = TipoStream.BUFFER;
                     break;
                 case 4:
                     // el bucle va a terminar
@@ -43,6 +39,34 @@ public class P07_1 {
                     System.out.println("La opcion " + opcion + " no se reconoce.");
                     break;
             }
+
+            if (tipo != null) {
+                try {
+                    System.out.print("Ruta del fichero: ");
+                    String entrada = pedirEntrada();
+                    System.out.print("Ruta de salida: ");
+                    String salida = pedirSalida();
+        
+                    String buff = "";
+                    buff = GestorArchivos.leer(entrada, tipo);
+                    String datos = analizarDatos(buff);
+
+                    System.out.println("====================================");
+                    System.out.println("===== CARTELERA DE CINE FBMOLL =====");
+                    System.out.println("====================================");
+                    System.out.println(datos);
+
+                    GestorArchivos.escribir(salida, datos, tipo, true);
+                } catch (InputFilePathException e) {
+                    System.out.println(e.getError());
+                    e.log("errores.txt", tipo);
+                } catch (OutputFilePathException e) {
+                    System.out.println(e.getError());
+                    e.log("errores.txt", tipo);
+                } catch (IOException ioe) {
+                    System.out.println(ioe.getMessage());
+                }
+            }
         }
 
         sc.close();
@@ -50,10 +74,19 @@ public class P07_1 {
 
     public static String pedirEntrada() throws InputFilePathException {
         Scanner sc = new Scanner(System.in);
-
         String ruta = sc.nextLine();
         if (new File(ruta).exists() == false) {
             throw new InputFilePathException("La ruta " + ruta + " no existe.");
+        }
+
+        return ruta;
+    }
+
+    public static String pedirSalida() throws OutputFilePathException {
+        Scanner sc = new Scanner(System.in);
+        String ruta = sc.nextLine();
+        if (new File(ruta).exists() == false) {
+            throw new OutputFilePathException("La ruta " + ruta + " no existe.");
         }
 
         return ruta;
@@ -79,10 +112,8 @@ public class P07_1 {
         return lista_str.toArray(new String[0]);
     }
 
-    public static void analizarDatos(String datos) {
-        System.out.println("====================================");
-        System.out.println("===== CARTELERA DE CINE FBMOLL =====");
-        System.out.println("====================================");
+    public static String analizarDatos(String datos) {
+        String ret = "";
         // primero separamos todo el string por '{' (por pelicula)
         // por cada substring, lo separamos por '#' (por dato)
         for (String str : separarString(datos, '{')) {
@@ -119,37 +150,8 @@ public class P07_1 {
 
                 i ++;
             } 
-            p.datos();
+            ret += p.datos();
         }
-    }
-
-    public static void leerConByteStreams() throws InputFilePathException, IOException {
-        FileInputStream fin = null;
-        try {
-            System.out.print("Ruta del fichero: ");
-            String ruta = pedirEntrada();
-            //System.out.print("Ruta de salida: ");
-            //String salida = pedirEntrada();
-
-            fin = new FileInputStream(ruta);
-            String buff = "";
-            int c = 0;
-
-            while ((c = fin.read()) != -1) buff += (char)c;
-
-            analizarDatos(buff);
-        } catch (InputFilePathException e) {
-            e.log("errores.txt");
-        } catch (IOException ioe) {
-            throw ioe;
-        } finally {
-            if (fin != null) fin.close();
-        }
-    }
-
-    public static void leerConCharacterStreams() {
-    }
-
-    public static void leerConBufferStreams() {
+        return ret;
     }
 }

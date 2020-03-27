@@ -19,31 +19,19 @@ public class InputFilePathException extends Throwable {
         this.error = error;
     }
 
-    public void log(String ruta) {
-        FileOutputStream fout = null;
+    public void log(String ruta, TipoStream tipo) {
         try {
-            fout = new FileOutputStream(ruta, true);
-
             // obtener fecha y hora
+            String str = "";
             DateFormat df = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
             Date objFecha = new Date();
-            String fecha = df.format(objFecha) + " - ";
-            for (int i = 0; i < fecha.length(); i ++) fout.write(fecha.charAt(i));
-
-            // imprimir error
+            String fecha = df.format(objFecha);
             String error = getError();
-            for (int i = 0; i < error.length(); i ++) fout.write(error.charAt(i));
-
-            fout.write('\n');
-        } catch (IOException e) {
-            // muestro el mensaje de error aqui para evitar repeticion de codigo en el main()
-            System.out.println(e.getMessage());
-        } finally {
-            try {
-                if (fout != null) fout.close();
-            } catch (IOException ioe) {
-                System.out.println(ioe.getMessage());
-            }
+            str = fecha + " - " + error + "\n";
+    
+            GestorArchivos.escribir(ruta, str, tipo, true);
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
         }
     }
 }

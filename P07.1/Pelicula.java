@@ -76,13 +76,14 @@ public class Pelicula {
         this.sesion = sesion;
     }
 
-    public void datos() {
-        System.out.println("-----" + getTitulo() + "-----");
-        System.out.println("Año: " + getAno());
-        System.out.println("Director: " + getDirector());
-        System.out.println("Duracion: " + getDuracion());
-        System.out.println("Sinopsis: " + getSinopsis());
-        System.out.println("Reparto: " + getReparto());
-        System.out.println("Sesión: " + getSesion());
+    public String datos() {
+        String str = "-----" + getTitulo() + "-----\n";
+        str += "Año: " + getAno() + "\n";
+        str += "Director: " + getDirector() + "\n";
+        str += "Duracion: " + getDuracion() + "\n";
+        str += "Sinopsis: " + getSinopsis() + "\n";
+        str += "Reparto: " + getReparto() + "\n";
+        str += "Sesión: " + getSesion() + "\n";
+        return str;
     }
 }
