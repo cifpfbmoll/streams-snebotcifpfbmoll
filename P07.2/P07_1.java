@@ -6,12 +6,13 @@ public class P07_1 {
         Scanner sc = new Scanner(System.in);
 
         int opcion = 0;
-        while (opcion != 4) {
+        while (opcion != 5) {
             System.out.println("==== MENU ====");
             System.out.println("\t1) Lectura y escritura del fichero de cartelera byte a byte (byte Streams).");
             System.out.println("\t2) Lectura y escritura de fichero de cartelera carácter a carácter (character Streams).");
             System.out.println("\t3) Lectura y escritura de fichero línea a línea con buffers (character Streams).");
-            System.out.println("\t4) Salir.");
+            System.out.println("\t4) Tratamiento de objetos.");
+            System.out.println("\t5) Salir.");
             System.out.print("\n> ");
 
             try {
@@ -155,5 +156,18 @@ public class P07_1 {
             ret += p.datos();
         }
         return ret;
+    }
+
+    public static void tratamientoObjetos() {
+        int opcion = 0;
+        while (opcion != 5) {
+            System.out.println("==== OBJETOS ====");
+            System.out.println("\ta) Lectura línea a línea y escritura con objetos.");
+            System.out.println("\tb) Lectura de objetos y escritura de objetos.");
+            System.out.println("\tc) Lectura de objetos y escritura por consola.");
+            System.out.println("\tc) Lectura por consola y escritura de objetos.");
+            System.out.println("\td) Volver al menú principal.");
+            System.out.print("\n> ");
+        }
     }
 }

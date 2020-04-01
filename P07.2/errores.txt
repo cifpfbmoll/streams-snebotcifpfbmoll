@@ -1,0 +1,1 @@
+01/49/2020 03:49:01 - La ruta asdf no existe. | [Ljava.lang.StackTraceElement;@eed1f14
