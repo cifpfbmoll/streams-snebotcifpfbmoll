@@ -1,1 +1,5 @@
 01/49/2020 03:49:01 - La ruta asdf no existe. | [Ljava.lang.StackTraceElement;@eed1f14
+03/00/2020 03:00:35 - La ruta aslkdfj no existe. | [Ljava.lang.StackTraceElement;@eed1f14
+03/13/2020 03:13:58 - La ruta cartelara.txt no existe. | [Ljava.lang.StackTraceElement;@eed1f14
+03/54/2020 03:54:20 - La ruta p1.tx no existe. | [Ljava.lang.StackTraceElement;@eed1f14
+03/55/2020 03:55:03 - La ruta p2.tcxt no existe. | [Ljava.lang.StackTraceElement;@eed1f14

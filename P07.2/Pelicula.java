@@ -1,6 +1,7 @@
 import java.util.*;
+import java.io.Serializable;
 
-public class Pelicula {
+public class Pelicula implements Serializable {
     private String titulo = "";
     private String ano = "";
     private String director = "";
@@ -67,12 +68,13 @@ public class Pelicula {
 
     public Pelicula() {}
 
-    public Pelicula(String titulo, String ano, String director, String duracion, String sinopsis, String sesion) {
+    public Pelicula(String titulo, String ano, String director, String duracion, String sinopsis, String reparto, String sesion) {
         this.titulo = titulo;
         this.ano = ano;
         this.director = director;
         this.duracion = duracion;
         this.sinopsis = sinopsis;
+        this.reparto = reparto;
         this.sesion = sesion;
     }
 

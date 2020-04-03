@@ -34,4 +34,9 @@ public class InputFilePathException extends Throwable {
             System.out.println(ioe.getMessage());
         }
     }
+
+    // escritura a nivel de bytes va a ser la predetermina
+    public void log(String ruta) {
+        log(ruta, TipoStream.BYTE);
+    }
 }
