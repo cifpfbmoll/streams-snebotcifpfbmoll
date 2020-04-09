@@ -71,18 +71,28 @@ public class P07_3 {
 
     public static void mostrarDatos(String ruta) throws FileNotFoundException, IOException {
         for (String dato : leerDatos(ruta)) {
-            Boletin bol = crearBoletin(dato.split(" "));
-            System.out.println(bol.datos());
+            try {
+                Boletin bol = crearBoletin(dato.split(" "));
+                System.out.println(bol.datos());
+            } catch (NotaException e) {
+                System.out.println(e.getError());
+                e.log();
+            }
         }
     }
 
     public static void escribirObjetos(String entrada, String salida) throws FileNotFoundException, IOException {
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(salida, true));
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(salida));
         try {
             for (String dato : leerDatos(entrada)) {
-                Boletin bol = crearBoletin(dato.split(" "));
-                System.out.println(bol.datos());
-                out.writeObject(bol);
+                try {
+                    Boletin bol = crearBoletin(dato.split(" "));
+                    System.out.println(bol.datos());
+                    out.writeObject(bol);
+                } catch (NotaException e) {
+                    System.out.println(e.getError());
+                    e.log();
+                }
             }
         } finally {
             out.close();
@@ -93,8 +103,13 @@ public class P07_3 {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(ruta));
         try {
             while (true) {
-                Boletin bol = (Boletin)in.readObject();
-                System.out.println(bol.datos());
+                try {
+                    Boletin bol = (Boletin)in.readObject();
+                    System.out.println(bol.datos());
+                } catch (NotaException e) {
+                    System.out.println(e.getError());
+                    e.log();
+                }
             }
         } catch (EOFException e) {
             // no hacer nada, readObject() ha llegado al final del archivo

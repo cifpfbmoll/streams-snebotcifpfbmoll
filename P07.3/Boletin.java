@@ -66,6 +66,28 @@ public class Boletin implements Serializable {
         return this.fol;
     }
 
+    public int[] getResultados() throws NotaException {
+        String[] modulos = { getLlm(), getPrg(), getEd(), getBd(), getSi(), getFol() };
+
+        int[] res = new int[2];
+        for (String modulo : modulos) {
+            if (modulo.charAt(0) == 'c') {
+                // tiene el modulo convalidado
+                res[0]++;
+            } else {
+                int nota = Integer.parseInt(modulo);
+                if (nota >= 5) {
+                    res[0]++;
+                } else {
+                    if (nota == 0) throw new NotaException("El alumno " + getNombre() + " no puede tener un 0. Debes poner una nota.");
+                    res[1]++;
+                }
+            }
+        }
+
+        return res;
+    }
+
     public Boletin() {}
 
     public Boletin(String nombre, String llm, String prg, String ed, String bd, String si, String fol) {
@@ -78,7 +100,7 @@ public class Boletin implements Serializable {
         this.fol = fol;
     }
 
-    public String datos() {
+    public String datos() throws NotaException {
         String datos = "---------------------------------------------\n";
         datos += "Boletín de notas CIFP FBMOLL\n";
         datos += "---------------------------------------------\n";
@@ -93,8 +115,10 @@ public class Boletin implements Serializable {
         datos += "Sistemas informáticos:                  " + getSi() + "\n";
         datos += "FOL:                                    " + getFol() + "\n";
         datos += "---------------------------------------------\n";
-        datos += "Nº de módulos aprobados: \t" + "\n";
-        datos += "Nº de módulos suspendidos: \t" + "\n";
+        
+        int[] res = getResultados();
+        datos += "Nº de módulos aprobados: \t" + res[0] + "\n";
+        datos += "Nº de módulos suspendidos: \t" + res[1] + "\n";
 
         return datos;
     }

@@ -1,0 +1,2 @@
+09/49/2020 12:49:50 - El alumno Adrián Hernández Sánchez no puede tener un 0. Debes poner una nota. | [Ljava.lang.StackTraceElement;@568db2f2
+09/50/2020 12:50:11 - El alumno Adrián Hernández Sánchez no puede tener un 0. Debes poner una nota. | [Ljava.lang.StackTraceElement;@2077d4de
